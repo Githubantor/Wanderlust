@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import useMediaQuery from '../hooks/useMediaQuery'
 import { useBookingPreview } from '../hooks/useLocalStorage'
 
@@ -59,7 +59,7 @@ function PriceBreakdown({ dest, count, date }) {
 }
 
 export default function BookingPreview() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const { previewState, updateField } = useBookingPreview()
 
@@ -78,7 +78,7 @@ export default function BookingPreview() {
     } catch {
       // ignore
     }
-    navigate('/book-now')
+    router.push('/book-now')
   }
 
   return (

@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import useMediaQuery from '../hooks/useMediaQuery'
 
 const floatingWords = ['Maldives', 'Santorini', 'Bali', 'Tokyo', 'Alps', 'Amazon']
@@ -54,7 +54,7 @@ const entranceVariants = [
 export default function Hero() {
   const ref = useRef(null)
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const navigate = useNavigate()
+  const router = useRouter()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], [0, 180])
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
@@ -119,7 +119,7 @@ export default function Hero() {
             style={{ display: 'flex', gap: 12, justifyContent: 'center', flexDirection: 'column' }}
           >
             <motion.button whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(99,102,241,0.3)' }} whileTap={{ scale: 0.96 }}
-              onClick={() => navigate('/#destinations')}
+              onClick={() => router.push('/#destinations')}
               style={{ padding: '14px 32px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer', width: '100%' }}>
               Start Exploring
             </motion.button>
@@ -197,7 +197,7 @@ export default function Hero() {
             style={{ display: 'flex', gap: 12 }}
           >
             <motion.button whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(99,102,241,0.3)' }} whileTap={{ scale: 0.96 }}
-              onClick={() => navigate('/#destinations')}
+              onClick={() => router.push('/#destinations')}
               style={{ padding: '14px 32px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
               Start Exploring
             </motion.button>

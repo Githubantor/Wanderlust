@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { adminFetchBookings, adminUpdateBooking } from '../api'
+import { useRouter } from 'next/navigation'
+import { adminFetchBookings, adminUpdateBooking } from '../lib/api-client'
 
 const statusColors = {
   pending: { bg: 'rgba(245,158,11,0.12)', text: '#F59E0B', label: 'Pending' },
@@ -99,7 +99,7 @@ function BookingCard({ booking, onAction }) {
 }
 
 export default function AdminDashboard() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const [bookings, setBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!token) {
-      navigate('/admin-login')
+      router.push('/admin-login')
       return
     }
     loadBookings()
@@ -121,7 +121,7 @@ export default function AdminDashboard() {
       setBookings(data)
     } catch {
       sessionStorage.removeItem('admin_token')
-      navigate('/admin-login')
+      router.push('/admin-login')
     }
     setLoading(false)
   }
@@ -145,7 +145,7 @@ export default function AdminDashboard() {
 
   function handleLogout() {
     sessionStorage.removeItem('admin_token')
-    navigate('/admin-login')
+    router.push('/admin-login')
   }
 
   return (

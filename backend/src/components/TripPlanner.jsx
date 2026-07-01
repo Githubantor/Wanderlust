@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import useMediaQuery from '../hooks/useMediaQuery'
 
 function DreamIcon({ color }) {
@@ -148,7 +148,7 @@ const perks = [
 ]
 
 export default function TripPlanner() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   return (
@@ -372,7 +372,7 @@ export default function TripPlanner() {
           <motion.button
             whileHover={{ scale: 1.05, boxShadow: '0 0 50px rgba(99,102,241,0.25)' }}
             whileTap={{ scale: 0.96 }}
-            onClick={() => navigate('/book-now')}
+            onClick={() => router.push('/book-now')}
             style={{
               padding: '15px 40px',
               borderRadius: 12,

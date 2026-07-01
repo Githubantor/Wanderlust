@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { adminLogin } from '../api'
+import { useRouter } from 'next/navigation'
+import { adminLogin } from '../lib/api-client'
 
 export default function AdminLogin() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -16,7 +16,7 @@ export default function AdminLogin() {
     try {
       const res = await adminLogin(password)
       sessionStorage.setItem('admin_token', res.token)
-      navigate('/admin')
+      router.push('/admin')
     } catch {
       setError('Invalid password')
       setLoading(false)

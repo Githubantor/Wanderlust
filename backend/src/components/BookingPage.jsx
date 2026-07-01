@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
 import { useState, useMemo, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useRouter, useSearchParams } from 'next/navigation'
 import useMediaQuery from '../hooks/useMediaQuery'
 import { useBookingForm, useBookingHistory, useUserProfile, useSelectedTrip } from '../hooks/useLocalStorage'
-import { createBooking } from '../api'
+import { createBooking } from '../lib/api-client'
 
 const destinations = [
   { name: 'Maldives', price: 2899, image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=80&h=80&fit=crop&auto=format' },
@@ -59,8 +59,8 @@ function AnimatedBg() {
 }
 
 export default function BookingPage() {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const { trip: selectedTrip, setTrip, removeTrip } = useSelectedTrip()
   const { formState, updateField, updateMultiple, resetForm } = useBookingForm()
@@ -102,13 +102,13 @@ export default function BookingPage() {
   }, [selectedTrip])
 
   useEffect(() => {
-    if (!selectedTrip && !location.state?.destination) {
+    if (!selectedTrip && !searchParams.get('destination')) {
       try { localStorage.removeItem('booking_form_state') } catch {}
     }
   }, [])
 
   useEffect(() => {
-    if ((!selectedTrip && !location.state?.destination) || dest) return
+    if ((!selectedTrip && !searchParams.get('destination')) || dest) return
     if (profile.name && !name) {
       updateMultiple({ name: profile.name, email: profile.email, phone: profile.phone })
     }
@@ -235,7 +235,7 @@ export default function BookingPage() {
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <motion.button
                 whileHover={{ scale: 1.04, boxShadow: '0 0 30px rgba(99,102,241,0.25)' }} whileTap={{ scale: 0.96 }}
-                onClick={() => navigate('/#destinations')}
+                onClick={() => router.push('/#destinations')}
                 style={{
                   padding: '12px 28px', borderRadius: 10, border: 'none',
                   background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', color: '#fff', fontWeight: 600, fontSize: 13, cursor: 'pointer',
@@ -246,7 +246,7 @@ export default function BookingPage() {
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.04, boxShadow: '0 0 30px rgba(99,102,241,0.25)' }} whileTap={{ scale: 0.96 }}
-                onClick={() => navigate('/')}
+                onClick={() => router.push('/')}
                 style={{
                   padding: '12px 28px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.15)',
                   background: 'transparent', color: '#fff', fontWeight: 600, fontSize: 13, cursor: 'pointer',

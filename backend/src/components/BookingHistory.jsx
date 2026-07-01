@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useBookingHistory } from '../hooks/useLocalStorage'
-import { fetchBookings } from '../api'
+import { fetchBookings } from '../lib/api-client'
 
 function AnimatedBg() {
   return (
@@ -97,7 +97,7 @@ function BookingCard({ booking, onRemove }) {
 }
 
 export default function BookingHistory() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const { history, removeBooking, clearHistory } = useBookingHistory()
   const [serverBookings, setServerBookings] = useState([])
 
@@ -150,7 +150,7 @@ export default function BookingHistory() {
               <motion.button
                 whileHover={{ scale: 1.04, boxShadow: '0 0 24px rgba(99,102,241,0.2)' }}
                 whileTap={{ scale: 0.96 }}
-                onClick={() => navigate('/book-now')}
+                onClick={() => router.push('/book-now')}
                 style={{
                   padding: '10px 20px', borderRadius: 10, border: 'none',
                   background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
@@ -197,7 +197,7 @@ export default function BookingHistory() {
               <motion.button
                 whileHover={{ scale: 1.04, boxShadow: '0 0 30px rgba(99,102,241,0.25)' }}
                 whileTap={{ scale: 0.96 }}
-                onClick={() => navigate('/book-now')}
+                onClick={() => router.push('/book-now')}
                 style={{
                   padding: '12px 28px', borderRadius: 10, border: 'none',
                   background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',

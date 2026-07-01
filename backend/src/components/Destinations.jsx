@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import useMediaQuery from '../hooks/useMediaQuery'
 
 function MaldivesIcon({ color }) {
@@ -171,7 +171,7 @@ function TiltCard({ dest, index }) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const navigate = useNavigate()
+  const router = useRouter()
   const Icon = DestIcon[dest.name]
 
   const rotateX = useTransform(y, [-0.5, 0.5], [8, -8])
@@ -217,7 +217,7 @@ function TiltCard({ dest, index }) {
           flexDirection: 'column',
           height: '100%',
         }}
-        onClick={() => navigate('/book-now', { state: { destination: dest.name } })}
+        onClick={() => router.push('/book-now?destination=' + encodeURIComponent(dest.name))}
         animate={{
           y: [0, -10, 0],
         }}
@@ -333,7 +333,7 @@ function TiltCard({ dest, index }) {
               boxShadow: `0 0 32px ${dest.vibe}30`,
             }}
             whileTap={{ scale: 0.97 }}
-            onClick={() => navigate('/book-now', { state: { destination: dest.name } })}
+            onClick={() => router.push('/book-now?destination=' + encodeURIComponent(dest.name))}
             style={{
               marginTop: 'auto',
               padding: '12px 0',

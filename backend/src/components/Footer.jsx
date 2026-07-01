@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
 import useMediaQuery from '../hooks/useMediaQuery'
 
 const links = {
@@ -9,7 +9,7 @@ const links = {
 }
 
 export default function Footer() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   return (
@@ -110,7 +110,7 @@ export default function Footer() {
           <motion.button
             whileHover={{ scale: 1.04, color: '#818CF8' }}
             whileTap={{ scale: 0.96 }}
-            onClick={() => navigate('/admin-login')}
+            onClick={() => router.push('/admin-login')}
             style={{
               background: 'none', border: 'none', cursor: 'pointer', fontSize: 11,
               color: 'rgba(255,255,255,0.12)', fontWeight: 500, fontFamily: 'inherit',
