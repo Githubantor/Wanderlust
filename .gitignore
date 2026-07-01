@@ -2,5 +2,3 @@ node_modules/
 .next/
 .env*
 *.log
-frontend/
-backend/node_modules/
